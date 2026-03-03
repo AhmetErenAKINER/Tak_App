@@ -1,11 +1,16 @@
 export const COLORS = {
-  primary: "#0088CC",
-  primaryDark: "#006A9E",
-  background: "#F4FAFE",
-  surface: "#FFFFFF",
-  text: "#163248",
-  textMuted: "#5A7487",
-  border: "#CFE6F6",
+  primary: "#06AEDD",
+  primaryDark: "#0078B6",
+  secondary: "#00BFE7",
+  background: "#079FD5",
+  surface: "#0DADE0",
+  surfaceDark: "#048BC9",
+  white: "#FFFFFF",
+  textLight: "#E8F8FF",
+  border: "rgba(255,255,255,0.35)",
+  // Backward-compatible tokens for existing components
+  text: "#FFFFFF",
+  textMuted: "#D9F2FF",
   success: "#2E9C5D",
   danger: "#C23B3B",
 } as const;
@@ -19,7 +24,9 @@ export const SPACING = {
 } as const;
 
 export const RADIUS = {
-  sm: 8,
-  md: 12,
-  lg: 18,
+  sm: 12,
+  md: 16,
+  lg: 22,
+  pill: 28,
+  card: 22,
 } as const;

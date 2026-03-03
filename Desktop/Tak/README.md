@@ -1,47 +1,106 @@
-# TAK Medical Assistant
+# TAK Mobile App (React Native)
 
-TAK is a lightweight, modular React Native medical assistant application built with Expo SDK 51 and Expo Router.  
-It includes:
+Bu proje, React Native + Expo (Managed Workflow) kullanilarak gelistirilen TAK uygulamasidir.
+Navigasyon yapisi `expo-router` ile kurgulanmistir.
 
-- Home screen
-- FAQ screen with accordion behavior
-- Patient registration form
-- Video gallery
-- Reusable loading and empty states
+## Ozellikler
 
-The project is designed for compatibility with both:
+- Hasta Kaydi ekrani
+- Ana Sayfa kategori kartlari
+- Videolar (grid liste)
+- Sikca Sorulan Sorular (accordion)
+- Uzmana Sor / Iletisim ekrani
 
-- **Expo Go** (fast development and testing)
-- **Local Android Studio builds** (native Android workflow)
-
-## Tech Stack
+## Kullanilan Teknolojiler
 
 - React Native
-- Expo SDK 51 (Managed Workflow)
+- Expo SDK 51
 - Expo Router
 - TypeScript
-- `@expo/vector-icons`
-- `StyleSheet` based styling (no build-time styling dependencies)
+- Android Studio (native Android build ve debug icin)
 
-## Project Structure
+## Yerelde nasil calistiracagim? Gerekli kurulum ayrintilari
+
+### Gereksinimler
+
+- Node.js 18+
+- npm
+- Android Studio (SDK + Emulator)
+- (Opsiyonel) Android telefonda Expo Go
+
+### Kurulum
+
+```bash
+npm install
+```
+
+### Expo ile calistirma
+
+```bash
+npx expo start
+```
+
+Telefon ile calistirmak icin ayni Wi-Fi aginda Expo Go ile QR okutabilirsiniz.
+
+### Android Studio ile calistirma
+
+1. Proje kokunde `android/` klasoru yoksa olusturun:
+
+```bash
+npx expo prebuild --platform android
+```
+
+2. Android Studio ile `android/` klasorunu acin.
+3. Gradle Sync tamamlandiktan sonra emulator veya cihaz secin.
+4. `Run` (app) ile calistirin.
+
+Alternatif terminal komutu:
+
+```bash
+npx expo run:android
+```
+
+## APK/IPA dosyalari
+
+### APK (Android)
+
+Debug APK almak icin:
+
+```powershell
+cd android
+.\gradlew.bat assembleDebug
+```
+
+Olusan dosya:
+
+`android/app/build/outputs/apk/debug/app-debug.apk`
+
+### IPA (iOS)
+
+IPA build almak icin macOS ve Xcode gerekir. Expo tarafinda EAS Build kullanilabilir:
+
+```bash
+npx eas build -p ios
+```
+
+## Proje Yapisi
 
 ```text
 app/
   _layout.tsx
   index.tsx
-  faq.tsx
   register.tsx
   videos.tsx
+  faq.tsx
+  expert.tsx
 
 src/
   components/
+    AppScaffold.tsx
+    CategoryCard.tsx
+    VideoGridCard.tsx
+    PillButton.tsx
     AccordionItem.tsx
-    EmptyState.tsx
-    FormTextInput.tsx
-    InfoCard.tsx
-    LoadingState.tsx
-    ScreenContainer.tsx
-    VideoCard.tsx
   constants/
     theme.ts
   services/
@@ -51,96 +110,3 @@ src/
   types/
     index.ts
 ```
-
-## Prerequisites
-
-- Node.js 18+ (LTS recommended)
-- npm 9+
-- Android Studio (for local emulator/device build flow)
-- Expo Go app on Android device (for quick mobile testing)
-
-## Installation
-
-```bash
-npm install
-```
-
-## Run in Development
-
-### Start Metro
-
-```bash
-npm run start
-```
-
-### Run with Expo Go
-
-1. Start Metro using `npm run start`.
-2. Press `a` to open Android emulator, or scan the QR code in Expo Go.
-3. Verify all routes:
-   - `/` (Home)
-   - `/faq`
-   - `/register`
-   - `/videos`
-
-### Run directly on Android from CLI
-
-```bash
-npm run android
-```
-
-## Local Android Studio Build (Managed Workflow)
-
-This project supports local Android native generation using Expo prebuild.
-
-### 1) Generate native Android project
-
-```bash
-npx expo prebuild --platform android
-```
-
-### 2) Open Android project in Android Studio
-
-Open:
-
-```text
-android/
-```
-
-### 3) Build and run from Android Studio
-
-- Let Gradle sync complete.
-- Select emulator/device.
-- Run app from Android Studio (Run button).
-
-### 4) Optional CLI build/run from Android folder
-
-```bash
-cd android
-./gradlew assembleDebug
-```
-
-On Windows PowerShell:
-
-```powershell
-cd android
-.\gradlew.bat assembleDebug
-```
-
-## Type Check
-
-```bash
-npm run typecheck
-```
-
-## Notes for Production Readiness
-
-- Replace mock service data with API integrations.
-- Add backend validation, authentication, and secure storage.
-- Add legal/privacy compliance steps for real patient data.
-- Add unit/integration tests for all form, service, and navigation flows.
-
-## Medical Disclaimer
-
-TAK is a support assistant and educational tool.  
-It does **not** provide diagnosis and does **not** replace professional medical care.

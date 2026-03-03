@@ -7,7 +7,8 @@ const simulateDelay = (ms: number) =>
 
 export const registrationService = {
   async submit(payload: RegistrationPayload): Promise<{ ok: boolean }> {
-    void payload;
+    // Demo: Gercek API yerine yerel log kullanilir.
+    console.log("Kayit olustur payload:", payload);
     await simulateDelay(800);
     return { ok: true };
   },

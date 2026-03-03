@@ -2,7 +2,6 @@
   "expo": {
     "name": "Tak",
     "slug": "Tak",
-    "scheme": "tak",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -22,7 +21,8 @@
         "backgroundImage": "./assets/android-icon-background.png",
         "monochromeImage": "./assets/android-icon-monochrome.png"
       },
-      "predictiveBackGestureEnabled": false
+      "predictiveBackGestureEnabled": false,
+      "package": "com.ahmeteren.takapp"
     },
     "web": {
       "favicon": "./assets/favicon.png"

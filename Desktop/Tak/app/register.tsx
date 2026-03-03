@@ -1,116 +1,95 @@
 import { useState } from "react";
-import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
-import { FormTextInput } from "../src/components/FormTextInput";
-import { ScreenContainer } from "../src/components/ScreenContainer";
+import { Alert, StyleSheet, Text, TextInput, View } from "react-native";
+import { useRouter } from "expo-router";
+import { AppScaffold } from "../src/components/AppScaffold";
+import { PillButton } from "../src/components/PillButton";
 import { COLORS, RADIUS, SPACING } from "../src/constants/theme";
 import { registrationService } from "../src/services/registrationService";
 
 const initialState = {
   fullName: "",
-  age: "",
-  phone: "",
-  symptoms: "",
 };
 
 export default function RegisterScreen() {
+  const router = useRouter();
   const [form, setForm] = useState(initialState);
   const [submitting, setSubmitting] = useState(false);
-  const [message, setMessage] = useState("");
-
-  const isValid = form.fullName.trim() && form.age.trim() && form.phone.trim();
+  const isValid = form.fullName.trim().length > 2;
 
   const handleSubmit = async () => {
     if (!isValid) {
-      setMessage("Please fill full name, age, and phone number.");
+      Alert.alert("Eksik Bilgi", "Lutfen ad soyad bilgisini giriniz.");
       return;
     }
 
     setSubmitting(true);
-    setMessage("");
     const result = await registrationService.submit(form);
     setSubmitting(false);
 
     if (result.ok) {
-      setMessage("Registration completed successfully.");
+      Alert.alert("Basarili", "Kayit olusturuldu.");
       setForm(initialState);
     }
   };
 
   return (
-    <ScreenContainer title="Registration" subtitle="Patient intake and symptom declaration">
-      <ScrollView contentContainerStyle={styles.container} showsVerticalScrollIndicator={false}>
-        <FormTextInput
-          label="Full Name"
+    <AppScaffold title="KAYIT OLUSTUR" leftLabel="GERI DON" onLeftPress={() => router.back()}>
+      <View style={styles.container}>
+        <View style={styles.illustration} />
+
+        <Text style={styles.screenTitle}>HASTA KAYDI</Text>
+
+        <TextInput
           value={form.fullName}
-          placeholder="Enter full name"
+          placeholder="AD SOYAD"
+          placeholderTextColor={COLORS.textLight}
           onChangeText={(value) => setForm((prev) => ({ ...prev, fullName: value }))}
+          style={styles.input}
         />
 
-        <FormTextInput
-          label="Age"
-          value={form.age}
-          placeholder="Enter age"
-          keyboardType="number-pad"
-          onChangeText={(value) => setForm((prev) => ({ ...prev, age: value }))}
+        <PillButton
+          label="KAYIT OLUSTUR"
+          onPress={handleSubmit}
+          loading={submitting}
+          disabled={!isValid}
+          style={styles.submit}
         />
-
-        <FormTextInput
-          label="Phone Number"
-          value={form.phone}
-          placeholder="Enter phone number"
-          keyboardType="phone-pad"
-          onChangeText={(value) => setForm((prev) => ({ ...prev, phone: value }))}
-        />
-
-        <FormTextInput
-          label="Symptoms (Optional)"
-          value={form.symptoms}
-          placeholder="Describe current symptoms"
-          multiline
-          onChangeText={(value) => setForm((prev) => ({ ...prev, symptoms: value }))}
-        />
-
-        <Pressable onPress={handleSubmit} style={[styles.submit, submitting ? styles.disabled : null]} disabled={submitting}>
-          <Text style={styles.submitText}>{submitting ? "Submitting..." : "Submit Registration"}</Text>
-        </Pressable>
-
-        {message ? (
-          <View style={styles.messageBox}>
-            <Text style={styles.messageText}>{message}</Text>
-          </View>
-        ) : null}
-      </ScrollView>
-    </ScreenContainer>
+      </View>
+    </AppScaffold>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
+    paddingTop: SPACING.md,
     gap: SPACING.md,
-    paddingBottom: SPACING.xl,
   },
-  submit: {
-    backgroundColor: COLORS.primary,
-    borderRadius: RADIUS.sm,
-    paddingVertical: SPACING.sm,
-    alignItems: "center",
-  },
-  disabled: {
-    opacity: 0.65,
-  },
-  submitText: {
-    color: "#FFFFFF",
-    fontWeight: "700",
-  },
-  messageBox: {
+  illustration: {
+    height: 170,
+    borderRadius: RADIUS.card,
     borderWidth: 1,
     borderColor: COLORS.border,
-    backgroundColor: COLORS.surface,
-    borderRadius: RADIUS.sm,
-    padding: SPACING.sm,
+    backgroundColor: "rgba(255,255,255,0.18)",
   },
-  messageText: {
-    color: COLORS.primaryDark,
+  screenTitle: {
+    color: COLORS.textLight,
+    textAlign: "center",
+    fontSize: 44,
+    fontWeight: "300",
+    letterSpacing: 0.4,
+  },
+  input: {
+    height: 54,
+    borderRadius: RADIUS.pill,
+    borderWidth: 1,
+    borderColor: COLORS.border,
+    color: COLORS.white,
+    paddingHorizontal: SPACING.lg,
+    backgroundColor: "rgba(255,255,255,0.07)",
+    fontSize: 18,
     fontWeight: "600",
+  },
+  submit: {
+    marginTop: SPACING.sm,
   },
 });

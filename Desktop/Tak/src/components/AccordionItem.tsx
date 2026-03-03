@@ -18,7 +18,7 @@ export function AccordionItem({ item }: AccordionItemProps) {
         <MaterialCommunityIcons
           name={expanded ? "chevron-up" : "chevron-down"}
           size={24}
-          color={COLORS.primary}
+          color={COLORS.white}
         />
       </Pressable>
       {expanded ? <Text style={styles.answer}>{item.answer}</Text> : null}
@@ -28,28 +28,33 @@ export function AccordionItem({ item }: AccordionItemProps) {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: COLORS.surface,
+    backgroundColor: "rgba(0,0,0,0.08)",
     borderRadius: RADIUS.md,
     borderWidth: 1,
     borderColor: COLORS.border,
-    padding: SPACING.md,
-    gap: SPACING.sm,
+    overflow: "hidden",
   },
   header: {
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
     gap: SPACING.sm,
+    padding: SPACING.md,
   },
   question: {
     flex: 1,
-    color: COLORS.text,
-    fontSize: 15,
-    fontWeight: "600",
+    color: COLORS.white,
+    fontSize: 24,
+    fontWeight: "700",
+    letterSpacing: 0.2,
   },
   answer: {
-    color: COLORS.textMuted,
+    color: COLORS.textLight,
     lineHeight: 20,
     fontSize: 14,
+    paddingHorizontal: SPACING.md,
+    paddingBottom: SPACING.md,
+    borderTopWidth: 1,
+    borderTopColor: COLORS.border,
   },
 });
