@@ -11,6 +11,10 @@ Navigasyon yapisi `expo-router` ile kurgulanmistir.
 - Sikca Sorulan Sorular (accordion)
 - Uzmana Sor / Iletisim ekrani
 
+## Demo Videosu
+
+YouTube (Shorts): https://youtube.com/shorts/LBaxsN1GibI?feature=share
+
 ## Kullanilan Teknolojiler
 
 - React Native
